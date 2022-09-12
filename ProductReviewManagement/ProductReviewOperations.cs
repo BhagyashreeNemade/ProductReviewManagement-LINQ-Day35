@@ -141,5 +141,30 @@ namespace ProductReviewManagement
                 Console.WriteLine();
             }
         }
+
+        /// <summary>
+        /// UC5
+        /// Gets the product identifier and review.
+        /// </summary>
+        /// <param name="productReviewList">The product review list.</param>
+        public static void GetProductIdAndReview(List<ProductReview> productReviewList)
+        {
+            var records = from list in productReviewList
+                          select new
+                          {
+                              ProductId = list.ProductId,
+                              Review = list.Review
+                          };
+            Console.WriteLine("\nProductId and Review");
+            Console.Write("{0,-20}", "ProductId");
+            Console.Write("{0,-20}", "Review");
+            Console.WriteLine();
+            foreach (var pr in records)
+            {
+                Console.Write("{0,-20}", pr.ProductId);
+                Console.Write("{0,-20}", pr.Review);
+                Console.WriteLine();
+            }
+        }
     }
 }
