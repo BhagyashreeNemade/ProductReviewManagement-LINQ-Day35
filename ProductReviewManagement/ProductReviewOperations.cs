@@ -19,18 +19,18 @@ namespace ProductReviewManagement
                 new ProductReview(){ProductId=1,UserId=1,Rating=5,Review="Good",IsLike=true},
                 new ProductReview(){ProductId=2,UserId=1,Rating=4,Review="Good",IsLike=true},
                 new ProductReview(){ProductId=3,UserId=2,Rating=5,Review="Good",IsLike=true},
-                new ProductReview(){ProductId=4,UserId=2,Rating=4,Review="Good",IsLike=true},
+                new ProductReview(){ProductId=2,UserId=2,Rating=4,Review="Good",IsLike=true},
                 new ProductReview(){ProductId=5,UserId=3,Rating=2,Review="Good",IsLike=false},
                 new ProductReview(){ProductId=6,UserId=4,Rating=1,Review="Good",IsLike=false},
                 new ProductReview(){ProductId=7,UserId=3,Rating=1.5,Review="Good",IsLike=false},
                 new ProductReview(){ProductId=8,UserId=10,Rating=9,Review="Good",IsLike=true},
-                new ProductReview(){ProductId=9,UserId=10,Rating=10,Review="Good",IsLike=true},
+                new ProductReview(){ProductId=6,UserId=10,Rating=10,Review="Good",IsLike=true},
                 new ProductReview(){ProductId=10,UserId=10,Rating=8,Review="Good",IsLike=true},
                 new ProductReview(){ProductId=11,UserId=10,Rating=3,Review="Good",IsLike=true},
-                new ProductReview(){ProductId=12,UserId=10,Rating=7,Review="Good",IsLike=true},
+                new ProductReview(){ProductId=11,UserId=10,Rating=7,Review="Good",IsLike=true},
                 new ProductReview(){ProductId=13,UserId=10,Rating=2,Review="Good",IsLike=true},
                 new ProductReview(){ProductId=14,UserId=10,Rating=1,Review="Good",IsLike=true},
-                new ProductReview(){ProductId=15,UserId=10,Rating=6,Review="Good",IsLike=true},
+                new ProductReview(){ProductId=14,UserId=10,Rating=6,Review="Good",IsLike=true},
                 new ProductReview(){ProductId=16,UserId=10,Rating=4,Review="Good",IsLike=true}
             };
             return productReviewList;
@@ -114,7 +114,32 @@ namespace ProductReviewManagement
                 Console.Write("{0,-20}", pr.IsLike);
                 Console.WriteLine();
             }
+        }
 
+        /// <summary>
+        /// UC4
+        /// Counts the of review for each product identifier.
+        /// </summary>
+        /// <param name="productReviewList">The product review list.</param>
+        public static void CountOfReviewForEachProductID(List<ProductReview> productReviewList)
+        {
+            var records = from list in productReviewList
+                          group list by list.ProductId into grp
+                          select new
+                          {
+                              ProductId = grp.Key,
+                              NumberOfReviews = grp.Count()
+                          };
+            Console.WriteLine("\nNo of reviews per product id");
+            Console.Write("{0,-20}", "ProductId");
+            Console.Write("{0,-20}", "NumberOfReviews");
+            Console.WriteLine();
+            foreach (var pr in records)
+            {
+                Console.Write("{0,-20}", pr.ProductId);
+                Console.Write("{0,-20}", pr.NumberOfReviews);
+                Console.WriteLine();
+            }
         }
     }
 }

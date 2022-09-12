@@ -11,7 +11,7 @@ namespace ProductReviewManagement
 
             List<ProductReview> productReviewList = ProductReviewOperations.GetProductReviews();
             //ProductReviewOperations.Display(productReviewList);
-            ProductReviewOperations.RetriveRecordsWithRatingAbove3(productReviewList);
+            ProductReviewOperations.CountOfReviewForEachProductID(productReviewList);
         }
     }
 }
