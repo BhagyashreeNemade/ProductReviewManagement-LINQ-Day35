@@ -21,20 +21,20 @@ namespace ProductReviewManagement
             {
                 new ProductReview(){ProductId=1,UserId=1,Rating=5,Review="Good",IsLike=true},
                 new ProductReview(){ProductId=2,UserId=1,Rating=4,Review="Good",IsLike=true},
-                new ProductReview(){ProductId=3,UserId=2,Rating=5,Review="Good",IsLike=true},
-                new ProductReview(){ProductId=2,UserId=2,Rating=4,Review="Good",IsLike=true},
+                new ProductReview(){ProductId=3,UserId=2,Rating=5,Review="Nice",IsLike=true},
+                new ProductReview(){ProductId=2,UserId=2,Rating=4,Review="Nice",IsLike=true},
                 new ProductReview(){ProductId=5,UserId=3,Rating=2,Review="Good",IsLike=false},
                 new ProductReview(){ProductId=6,UserId=4,Rating=1,Review="Good",IsLike=false},
                 new ProductReview(){ProductId=7,UserId=3,Rating=1.5,Review="Good",IsLike=false},
                 new ProductReview(){ProductId=8,UserId=10,Rating=9,Review="Good",IsLike=true},
-                new ProductReview(){ProductId=6,UserId=10,Rating=10,Review="Good",IsLike=true},
+                new ProductReview(){ProductId=6,UserId=10,Rating=10,Review="Nice",IsLike=true},
                 new ProductReview(){ProductId=10,UserId=10,Rating=8,Review="Good",IsLike=true},
                 new ProductReview(){ProductId=11,UserId=10,Rating=3,Review="Good",IsLike=true},
-                new ProductReview(){ProductId=11,UserId=10,Rating=7,Review="Good",IsLike=true},
+                new ProductReview(){ProductId=11,UserId=10,Rating=7,Review="Nice",IsLike=true},
                 new ProductReview(){ProductId=13,UserId=10,Rating=2,Review="Good",IsLike=true},
-                new ProductReview(){ProductId=14,UserId=10,Rating=1,Review="Good",IsLike=true},
+                new ProductReview(){ProductId=14,UserId=10,Rating=1,Review="Nice",IsLike=true},
                 new ProductReview(){ProductId=14,UserId=10,Rating=6,Review="Good",IsLike=true},
-                new ProductReview(){ProductId=16,UserId=10,Rating=4,Review="Good",IsLike=true}
+                new ProductReview(){ProductId=16,UserId=10,Rating=1.1,Review="Bad",IsLike=true}
             };
             return productReviewList;
         }
@@ -309,6 +309,35 @@ namespace ProductReviewManagement
             {
                 Console.Write("{0,-20}", pr.ProductId);
                 Console.Write("{0,-20}", pr.AvgRating);
+                Console.WriteLine();
+            }
+        }
+
+        /// <summary>
+        /// UC11
+        /// Retrieves the records with nice review.
+        /// </summary>
+        /// <param name="table">The table.</param>
+        public static void RetrieveRecordsWithNiceReview(DataTable table)
+        {
+            var _records = table.AsEnumerable().Where(a => a.Field<string>("Review").ToLower().Contains("nice"));
+            var records = from list in table.AsEnumerable()
+                          where list.Field<string>("Review").ToLower().Contains("nice")
+                          select list;
+            Console.WriteLine("\nRecords with nice review:");
+            Console.Write("{0,-20}", "ProductId");
+            Console.Write("{0,-20}", "UserId");
+            Console.Write("{0,-20}", "Rating");
+            Console.Write("{0,-20}", "Review");
+            Console.Write("{0,-20}", "IsLike");
+            Console.WriteLine();
+            foreach (var pr in _records)
+            {
+                Console.Write("{0,-20}", pr.Field<int>("ProductId"));
+                Console.Write("{0,-20}", pr.Field<int>("UserId"));
+                Console.Write("{0,-20}", pr.Field<double>("Rating"));
+                Console.Write("{0,-20}", pr.Field<string>("Review"));
+                Console.Write("{0,-20}", pr.Field<bool>("IsLike"));
                 Console.WriteLine();
             }
         }
