@@ -230,6 +230,10 @@ namespace ProductReviewManagement
             return dataTable;
         }
 
+        /// <summary>
+        /// Prints the data table.
+        /// </summary>
+        /// <param name="table">The table.</param>
         public static void PrintDataTable(DataTable table)
         {
             foreach (DataColumn column in table.Columns)
@@ -243,6 +247,34 @@ namespace ProductReviewManagement
                 {
                     Console.Write("{0,-20}", item);
                 }
+                Console.WriteLine();
+            }
+        }
+
+        /// <summary>
+        /// UC9
+        /// Retrieves the is like true records.
+        /// </summary>
+        /// <param name="table">The table.</param>
+        public static void RetrieveIsLikeTrueRecords(DataTable table)
+        {
+            var records = from list in table.AsEnumerable()
+                          where list.Field<bool>("IsLike") == true
+                          select list;
+            Console.WriteLine("\nSkip First 5 Records:");
+            Console.Write("{0,-20}", "ProductId");
+            Console.Write("{0,-20}", "UserId");
+            Console.Write("{0,-20}", "Rating");
+            Console.Write("{0,-20}", "Review");
+            Console.Write("{0,-20}", "IsLike");
+            Console.WriteLine();
+            foreach (var pr in records)
+            {
+                Console.Write("{0,-20}", pr.Field<int>("ProductId"));
+                Console.Write("{0,-20}", pr.Field<int>("UserId"));
+                Console.Write("{0,-20}", pr.Field<double>("Rating"));
+                Console.Write("{0,-20}", pr.Field<string>("Review"));
+                Console.Write("{0,-20}", pr.Field<bool>("IsLike"));
                 Console.WriteLine();
             }
         }
