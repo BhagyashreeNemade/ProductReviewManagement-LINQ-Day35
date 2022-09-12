@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -68,6 +69,7 @@ namespace ProductReviewManagement
         /// <param name="productReviewList">The product review list.</param>
         public static void TopRecords(List<ProductReview> productReviewList)
         {
+            var _data = productReviewList.OrderByDescending(a => a.Rating).Take(3);
             var data = (from list in productReviewList
                         orderby list.Rating descending
                         select list).Take(3);
@@ -96,6 +98,7 @@ namespace ProductReviewManagement
         /// <param name="productReviewList">The product review list.</param>
         public static void RetriveRecordsWithRatingAbove3(List<ProductReview> productReviewList)
         {
+            var _records = productReviewList.Where(a => (a.Rating > 3 && (a.ProductId == 1 || a.ProductId == 4 || a.ProductId == 9)));
             var records = from list in productReviewList
                           where list.Rating > 3 && (list.ProductId == 1 ||
                                 list.ProductId == 4 || list.ProductId == 9)
@@ -125,6 +128,7 @@ namespace ProductReviewManagement
         /// <param name="productReviewList">The product review list.</param>
         public static void CountOfReviewForEachProductID(List<ProductReview> productReviewList)
         {
+            var _records = productReviewList.GroupBy(a => a.ProductId).Select(a => new { ProductId = a.Key, NumberOfReviews = a.Count() });
             var records = from list in productReviewList
                           group list by list.ProductId into grp
                           select new
@@ -151,6 +155,7 @@ namespace ProductReviewManagement
         /// <param name="productReviewList">The product review list.</param>
         public static void GetProductIdAndReview(List<ProductReview> productReviewList)
         {
+            var _records = productReviewList.Select(a => new { ProductId = a.ProductId, Review = a.Review });
             var records = from list in productReviewList
                           select new
                           {
@@ -176,6 +181,7 @@ namespace ProductReviewManagement
         /// <param name="productReviewList">The product review list.</param>
         public static void SkipTop5Records(List<ProductReview> productReviewList)
         {
+            var _records = productReviewList.Skip(5);
             var records = (from list in productReviewList
                            select list).Skip(5);
             Console.WriteLine("\nSkip First 5 Records:");
@@ -258,6 +264,7 @@ namespace ProductReviewManagement
         /// <param name="table">The table.</param>
         public static void RetrieveIsLikeTrueRecords(DataTable table)
         {
+            var _records = table.AsEnumerable().Where(a => a.Field<bool>("IsLike") == true);
             var records = from list in table.AsEnumerable()
                           where list.Field<bool>("IsLike") == true
                           select list;
@@ -275,6 +282,33 @@ namespace ProductReviewManagement
                 Console.Write("{0,-20}", pr.Field<double>("Rating"));
                 Console.Write("{0,-20}", pr.Field<string>("Review"));
                 Console.Write("{0,-20}", pr.Field<bool>("IsLike"));
+                Console.WriteLine();
+            }
+        }
+
+        /// <summary>
+        /// UC10
+        /// Finds the average rating for each product.
+        /// </summary>
+        /// <param name="table">The table.</param>
+        public static void FindAverageRatingForEachProduct(DataTable table)
+        {
+            var _records = table.AsEnumerable().GroupBy(a => a.Field<int>("ProductId")).Select(a => new { ProductId = a.Key, AvgRating = a.Average(r => r.Field<double>("Rating")) });
+            var records = from list in table.AsEnumerable()
+                          group list by list.Field<int>("ProductId") into grp
+                          select new
+                          {
+                              ProductId = grp.Key,
+                              AvgRating = grp.Average(a => a.Field<double>("Rating"))
+                          };
+            Console.WriteLine("\nProductId and Average Rating:");
+            Console.Write("{0,-20}", "ProductId");
+            Console.Write("{0,-20}", "Average Rating");
+            Console.WriteLine();
+            foreach (var pr in _records)
+            {
+                Console.Write("{0,-20}", pr.ProductId);
+                Console.Write("{0,-20}", pr.AvgRating);
                 Console.WriteLine();
             }
         }
