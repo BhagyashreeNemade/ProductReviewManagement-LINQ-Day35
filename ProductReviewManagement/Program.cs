@@ -10,8 +10,8 @@ namespace ProductReviewManagement
             Console.WriteLine("Welcome to product review management using LINQ!\n");
 
             List<ProductReview> productReviewList = ProductReviewOperations.GetProductReviews();
-            ProductReviewOperations.Display(productReviewList);
-            ProductReviewOperations.TopRecords(productReviewList);
+            //ProductReviewOperations.Display(productReviewList);
+            ProductReviewOperations.RetriveRecordsWithRatingAbove3(productReviewList);
         }
     }
 }
