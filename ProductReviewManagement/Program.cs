@@ -12,7 +12,7 @@ namespace ProductReviewManagement
 
             List<ProductReview> productReviewList = ProductReviewOperations.GetProductReviews();
             DataTable table = ProductReviewOperations.ToDataTable<ProductReview>(productReviewList);
-            ProductReviewOperations.RetrieveRecordsWithNiceReview(table);
+            ProductReviewOperations.RetrieveRecordsWithUserId10AndOrderedByRating(table);
         }
     }
 }

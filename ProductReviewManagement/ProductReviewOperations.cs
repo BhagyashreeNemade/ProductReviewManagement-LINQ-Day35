@@ -341,5 +341,35 @@ namespace ProductReviewManagement
                 Console.WriteLine();
             }
         }
+
+        /// <summary>
+        /// UC12
+        /// Retrieves the records with user id 10 and ordered by rating.
+        /// </summary>
+        /// <param name="table">The table.</param>
+        public static void RetrieveRecordsWithUserId10AndOrderedByRating(DataTable table)
+        {
+            var _records = table.AsEnumerable().OrderBy(a => a.Field<double>("Rating")).Where(a => a.Field<int>("UserId") == 10);
+            var records = from list in table.AsEnumerable()
+                          orderby list.Field<double>("Rating") ascending
+                          where list.Field<int>("UserId") == 10
+                          select list;
+            Console.WriteLine("\nRecords with order id 10 and order by rating:");
+            Console.Write("{0,-20}", "ProductId");
+            Console.Write("{0,-20}", "UserId");
+            Console.Write("{0,-20}", "Rating");
+            Console.Write("{0,-20}", "Review");
+            Console.Write("{0,-20}", "IsLike");
+            Console.WriteLine();
+            foreach (var pr in _records)
+            {
+                Console.Write("{0,-20}", pr.Field<int>("ProductId"));
+                Console.Write("{0,-20}", pr.Field<int>("UserId"));
+                Console.Write("{0,-20}", pr.Field<double>("Rating"));
+                Console.Write("{0,-20}", pr.Field<string>("Review"));
+                Console.Write("{0,-20}", pr.Field<bool>("IsLike"));
+                Console.WriteLine();
+            }
+        }
     }
 }
