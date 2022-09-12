@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 
 namespace ProductReviewManagement
 {
@@ -10,8 +11,8 @@ namespace ProductReviewManagement
             Console.WriteLine("Welcome to product review management using LINQ!\n");
 
             List<ProductReview> productReviewList = ProductReviewOperations.GetProductReviews();
-            //ProductReviewOperations.Display(productReviewList);
-            ProductReviewOperations.SkipTop5Records(productReviewList);
+            DataTable table = ProductReviewOperations.ToDataTable<ProductReview>(productReviewList);
+            ProductReviewOperations.PrintDataTable(table);
         }
     }
 }
